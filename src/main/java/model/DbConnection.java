@@ -14,7 +14,7 @@ public class DbConnection {
     public  static Statement    statement;
     public  static ResultSet    resultSet;
 
-    private static volatile  DbConnection instance = new DbConnection();
+    private static volatile  DbConnection instance;
 
     private DbConnection() {
 
