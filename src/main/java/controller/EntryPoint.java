@@ -1,11 +1,8 @@
 package controller;
 
-import controller.gen.LocalNetsService;
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
+import view.MainFrame;
+
+import javax.swing.*;
 
 /**
  * Created by Dzmitry Saladukha on 15.04.2016.
@@ -13,25 +10,27 @@ import org.apache.thrift.transport.TTransport;
 public class EntryPoint {
     public static void main(String[] args) {
         try {
-            TTransport transport;
-            transport = new TSocket("localhost", 9090);
-            transport.open();
-
-            TProtocol protocol = new TBinaryProtocol(transport);
-            LocalNetsService.Client client = new LocalNetsService.Client(protocol);
-
-            perform(client);
-        } catch (TException e) {
+            UIManager
+                    .setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
             e.printStackTrace();
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (InstantiationException e1) {
+                e1.printStackTrace();
+            } catch (IllegalAccessException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedLookAndFeelException e1) {
+                e1.printStackTrace();
+            }
         }
-    }
 
-    private static void perform(LocalNetsService.Client client) throws TException {
-        System.out.println("Сеть — " + client.findAndPost("Сеть"));
-        System.out.println("Сервер — " + client.findAndPost("Сервер"));
-        System.out.println("Локальные сети — " + client.findAndPost("Локальные сети"));
-        System.out.println("Концентратор — " + client.findAndPost("Концентратор"));
-        System.out.println("Коммутатор — " + client.findAndPost("Коммутатор"));
-        System.out.println("Протоколы TCP/IP — " + client.findAndPost("Протоколы TCP/IP"));
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame();
+            }
+        });
     }
 }
