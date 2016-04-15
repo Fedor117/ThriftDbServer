@@ -1,8 +1,7 @@
 package controller;
 
 import controller.gen.LocalNetsService;
-import org.apache.thrift.server.TServer;
-import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
@@ -21,10 +20,11 @@ public class ProcessorRunner implements Runnable {
     public void run() {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
-            TServer server = new TSimpleServer(new TServer.Args(serverTransport).processor(processor));
-
+            TThreadPoolServer poolServer =
+                    new TThreadPoolServer(new TThreadPoolServer.Args(serverTransport).processor(processor));
+            
             System.out.println("Starting server on socket 9090.");
-            server.serve();
+            poolServer.serve();
         } catch (Exception e) {
             e.printStackTrace();
         }
