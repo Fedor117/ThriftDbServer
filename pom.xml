@@ -7,6 +7,7 @@
     <groupId>by.bsuir.iit.aipos.valiavko.thriftLocalNets</groupId>
     <artifactId>ThriftLocalNets</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <build>
         <plugins>
             <plugin>
